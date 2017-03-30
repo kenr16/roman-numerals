@@ -13,6 +13,8 @@ function coinSort (numberToBeSorted) {
     numberToBeSorted -= 900;
     $("#displayHere").append("CM");
   }
+
+  //There is a repetitive math relationship to be put in here DRY!
   if (numberToBeSorted < 900 && numberToBeSorted >= 500) {
     numberToBeSorted -= 500;
     $("#displayHere").append("D");
@@ -77,16 +79,133 @@ function coinSort (numberToBeSorted) {
   }
 }
 
+var disqualifyTest = function(numInput) {
+  return /^[0-9]*$/gi.test(numInput);
+}
+
+// **********************************************
+// Secret Square Function Back End
+// **********************************************
+
+function secretSquare(inputArray) {
+
+  var singleLetterArr = [];
+  inputArray.forEach(function(letter) {
+    if (letter === " ") {
+    } else {
+      singleLetterArr.push(letter);
+    }
+  });
+
+  var mesLength = singleLetterArr.length;
+  //alert(mesLength);//
+
+  var cubeSize  = function(mesLength) {
+    var sL = 2;
+    var square = 0;
+    while (square < mesLength) {
+      sL++;
+      square = sL*sL;
+    }
+    return(sL);
+  }
+
+  var sL = cubeSize(mesLength);
+  //alert(sL);//
+
+  var sLLettersSpace = [];
+
+  while(singleLetterArr.length > 0) {
+    for (var i=0; i<sL;i++) {
+      sLLettersSpace.push(singleLetterArr[0])
+      singleLetterArr.shift();
+    }
+    sLLettersSpace.push(" ");
+    //alert(sLLettersSpace);//
+  }
+
+  var finalArray = [];
+  var inx = 0;
+  var i = 0;
+  for (var j=0; j < sL; j=j) {
+    while(i < sL) {
+      finalArray.push(sLLettersSpace[inx]);
+      inx += (sL + 1);
+      i++
+    }
+    i = 0;
+    j++;
+    inx = j;
+  }
+  //alert(finalArray);//
+
+  var finalFinalArray = [];
+
+  while(finalArray.length > 0) {
+    for (var i = 0; i < 5 ; i++) {
+      finalFinalArray.push(finalArray[0]);
+      finalArray.shift();
+    }
+    finalFinalArray.push(" ");
+  }
+  $("#messageHere").text(finalFinalArray.join(""));
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 // **********************************************
 // Front End Code
 // **********************************************
 $(document).ready(function() {
-  $('form').submit(function(e) {
+  $(".formOne").submit(function(e) {
     e.preventDefault();
     var inputNumber = parseInt($('input#uxInput').val());
-    $("#displayHere").empty();
-    coinSort(inputNumber);
+
+    if (disqualifyTest(inputNumber) === true) {
+        $("#displayHere").empty();
+        coinSort(inputNumber);
+        } else {
+        alert("Please don't be ridiculous!");
+        }
+
+  });
+
+
+  $(".formTwo").submit(function(e) {
+    e.preventDefault();
+    var inputArray = $('input#txInput').val().split("");
+
+    secretSquare(inputArray);
+
+
+
+
+    // pseudocode:
+    // if entry exists:
+    // take [0] of each rowArray.
+    // else if entry does not exist: (returns undefined?)
+    // take the [1] of each rowArray.
+    //
+    // if (typeof map !== 'undefined' && map.getCenter) {
+    //   // code for both map and map.getCenter exists
+    // } else {
+    //   // if they dont exist
+    // }
+
+
+
+
+
+
   });
 });
