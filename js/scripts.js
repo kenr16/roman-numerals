@@ -1,11 +1,11 @@
 // **********************************************
 // Back End Code
 // **********************************************
-
+var outputArray = []
 function coinSort (numberToBeSorted) {
   if (numberToBeSorted < 4000 && numberToBeSorted >= 1000) {
     while (numberToBeSorted >= 1000) {
-      $("#displayHere").append("M");
+      $("#displayHere").append("M"); // outputArray.push("M")
       numberToBeSorted -= 1000;
     }
   }
@@ -128,6 +128,7 @@ function secretSquare(inputArray) {
   var inx = 0;
   var i = 0;
   for (var j=0; j < sL; j=j) {
+    inx = j;
     while(i < sL) {
       finalArray.push(sLLettersSpace[inx]);
       inx += (sL + 1);
@@ -135,8 +136,20 @@ function secretSquare(inputArray) {
     }
     i = 0;
     j++;
-    inx = j;
   }
+//ester
+  // var finalArray = [];
+  // var inx = 0;
+  // var i = 0;
+  // for (var j=0; j < sL; j++) {
+  //   while(i < sL) {
+  //     finalArray.push(sLLettersSpace[inx]);
+  //     inx += (sL + 1);
+  //     i++
+  //   }
+  //   i = 0;
+  //   inx = j+1;
+  // }
   //alert(finalArray);//
 
   var finalFinalArray = [];
@@ -151,8 +164,11 @@ function secretSquare(inputArray) {
   $("#messageHere").text(finalFinalArray.join(""));
 }
 
-
-
+// For all 1s
+//   place a 1 behind next level 1 up
+//   place a 5, place up to 3 1s
+//   place a 1 behind 5 at the level
+//   place up to 3 1s
 
 
 
